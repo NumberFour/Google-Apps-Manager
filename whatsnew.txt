@@ -1,0 +1,91 @@
+GAM 2.3
+
+  -GAM is now owned by Dito (www.ditoweb.com), the Google Apps Experts! See announcement and details at http://code.google.com/p/google-apps-manager
+  -New user profile photo management commands can update, get and delete user profile photos
+  -GAM now gracefully handles cross-domain mailbox delegations by using (or giving the delegate) an alias in the mailbox's domain.
+  -"gam user XXXX show delegates" now has optional argument "csv" to print existing delegations in CSV format
+  -GAM can now properly rename and delete long usernames by ensuring that the renamed user is max 64 characters in length
+  -"gam print groups" now has optional arguments nousermanagedgroups and onlyusermanagedgroups allowing user managed groups to be excluded from output or print user managed groups exclusively.
+
+GAM 2.2
+
+  -Update Calendar ACLs command, update user calendar settings command and ability to set calendar settings when subscribing user
+  -Delete Gmail labels command
+  -Fixes for *nix CSV formatting
+  -Fixes to make Windows and *nix generated oauth.txt files compatible
+  -"gam info user" now shows mailbox quota and user organization
+  -"gam update user" can now handle change of user's domain in renames. "gam multi" commands now fully deprecated.
+  -Fix reply_to and a few other group settings were never getting updated.
+  -"gam info group" now makes 3 efficient API calls rather than one per member/owner of the group greatly increasing performance with large groups
+  -GAM should do a better job of always printing out full email address instead of just username. If you see GAM reporting only the username and not the full email address, please report it as a bug.
+  -All OAuth scopes are now selected by default.
+
+GAM 2.1.1
+
+  -Fix to prevent unnecessary call to Groups Provisioning API when viewing detailed group settings
+  -should be show_in_group_directory not show_in_groups_directory.
+
+GAM 2.1
+
+  -New Reporting API Support allows you to pull 5 different daily reports: accounts, activity, disk_space, email_clients and summary.
+  -Fix for Adding calendars to a user's list of calendars. Bug in 2.0 meant calendar was always added to the calendar list of the admin who authorized GAM, not the target user.
+  -GAM now looks for an environment variable called OAUTHFILE. If it exists, GAM will use that file instead of oauth.txt for authentication. This allows admins of many Google Apps domains to switch quickly between domains.
+  -Fixes for many "gam print users" issues. Thanks to Craig Box for the patch.
+
+GAM 2.0
+
+-Group Settings commands allow you to update Google Group settings
+-Calendar commands allow you to grant access to calendars and modify user's list of calendars
+-Update Admin Settings like the logo, outbound gateway, email migration and more
+-OAuth is now the default authentication method. Support for username/password ClientLogin has been removed.
+-Vacation/Away messages can now have a start and end date. They can also be limited to within the domain only.
+-Further work to make all GAM commands multi-domain friendly.
+-Lot's more bugfixes! look at the Wiki pages for details
+
+GAM 1.9.1
+
+-"gam print postini" will print all of the Postini Batch commands necessary to "mirror" Google Apps email addresses
+  into a Postini standalone instance.
+
+-"gam version" will print details about the version of GAM you are using.
+
+GAM 1.9 - "Baby Steps"
+
+GAM 1.9 is dedicated to David, my 13 month year old son. Whose just starting to step out into the world this week.
+
+-whatnew.txt is new (is that an oxymoron?)
+
+-Share or Hide users profile from autocomplete and contacts search.
+  "gam user jsmith show profile"
+  "gam user jsmith profile share"
+  "gam group asked-to-be-hidden profile unshare"
+  
+  Profile modifications only work with OAuth, not ClientLogin (username/password entered into GAM). 
+  Since the profile API uses a scope GAM was not previously making use of, you'll need to re-run
+  "gam oauth request" to include the Profile API scope.
+
+-Numerous actions can now be performed for all users in a given Organizational
+  Unit just like they can be for a group or all users. i.e. "gam ou Students webclips off".
+
+-Provisioning API OAuth scope has been subdivided into user, group, alias and ou scopes
+  offering finer granularity.
+
+-"gam all users" will now include all users across primary and secondary domains instead of just primary domain users.
+
+-"gam info user" will show all email aliases for a user, not just those in the primary domain.
+
+-"gam print users" with any extra arguments would fail, this should be fixed now.
+
+-"gam info group" and "gam print groups" should no longer fail for groups with custom permissions.
+
+GAM 1.8
+
+-OAuth Support - GAM now supports OAuth Authentication. Instead of providing GAM your username and password, you grant GAM access to selected APIs from within your Google Account. This has a number of advantages:
+  -With OAuth GAM doesn't need to know your password.
+  -OAuth tokens don't expire, once you grant GAM OAuth access, GAM will have access until you revoke it within your Google account.
+  -OAuth has the concept of scopes, limiting the areas and services that access is granted to. This allows you to only provide GAM with the privileges it needs.
+  -More info about OAuth support is on it's way. But for now, you can try OAuth access by running "gam oauth request".
+
+-The settings filter command http://code.google.com/p/google-apps-manager/wiki/ExamplesEmailSettings#Create_a_Filter now has more actions including forward, star, trash and never send to spam.
+
+-Downloading Audit Exports now has partial resume support. GAM will not re-download files that already exist on the local drive. If a large export download fails you should delete the last file GAM was working on since it's incomplete and then restart the process, GAM will pick up with the last file.
